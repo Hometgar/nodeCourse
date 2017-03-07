@@ -1,31 +1,45 @@
 "use strict"
 
-var Weapon = require('./Weapon');
+const Weapon = require('./Weapon');
 
-var Sword = function(config) {
+const Sword = function(config) {
     Weapon.apply(this, arguments);
     this.legendary = false;
-    this.year;
+    this.year = config.year;
 };
 
 Sword.prototype = new Weapon();
 Sword.prototype.constructor  = Sword;
 
 Sword.prototype.isLegendary = function () {
-    return legendary;
+    return false;
 };
 
-Sword.prototype.setLegendary = function (legendary) {
-    this.legendary = legendary;
+Sword.prototype.duration = function(){
+    if(this.price == 0){
+        return 0
+    }
+    return (this.weigth * this.year) / this.price;
 };
 
-
-Sword.prototype.getYear = function () {
-    return this.year;
+Sword.prototype.damage = function(){
+    if(this.year == 0){
+        return 0;
+    }
+    let res = this.width * this.weigth * this.height;
+    res += this.bonus();
+    res /= this.year;
+    if(this.isLegendary() || this.year < 10){
+        res*=0.9;
+    }
+    return res;
 };
 
-Sword.prototype.setYear = function (year ) {
-    this.year = year;
+Sword.prototype.bonus = function () {
+    if(this.isLegendary() || this.year == 0){
+        return 0;
+    }
+    return this.weight / this.year;
 };
 
 module.exports = Sword;
